@@ -14,23 +14,47 @@ export default {
       loading: true,
       formattedDate: null,
       countdown: null,
+      rocket: '',
     };
+  },
+  computed: {
+    setBg() {
+      return {
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.95)), url(${this.rocket})`,
+      };
+    },
   },
   methods: {
     async getDatas() {
       const self = this;
-      await axios.get('https://api.spacexdata.com/v4/launches/next').then(res => {
-        self.launch = res.data;
-        // console.log(self.launch);
-        self.loading = false;
-        self.formattedDate = dayjs(res.data.date_local).format('DD/MM/YY [-] HH:mm');
-        self.countdown = dayjs(res.data.date_local).toNow(true);
-      });
+      await axios
+        .get('https://api.spacexdata.com/v4/launches/next')
+        .then(res => {
+          self.launch = res.data;
+          console.log(self.launch);
+          self.loading = false;
+          self.formattedDate = dayjs(res.data.date_local).format('DD/MM/YY [-] HH:mm');
+          self.countdown = dayjs(res.data.date_local).toNow(true);
+        })
+        .catch(err => {
+          console.log(err);
+        });
       await axios
         .get(`https://api.spacexdata.com/v4/launchpads/${self.launch.launchpad}`)
         .then(res => {
           self.launchpad = res.data.full_name;
-          console.log(self.launchpad);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      await axios
+        .get(`https://api.spacexdata.com/v4/rockets/${self.launch.rocket}`)
+        .then(res => {
+          self.rocket = res.data.flickr_images[Math.floor(Math.random() * res.data.flickr_images.length)];
+          console.log(res.data.flickr_images[Math.floor(Math.random() * res.data.flickr_images.length)]);
+        })
+        .catch(err => {
+          console.log(err);
         });
     },
   },
@@ -44,16 +68,13 @@ export default {
   <div class="bg-black h-full flex flex-col items-center justify-center" v-if="loading">
     <span class="animate-pulse">Loading...</span>
   </div>
-  <main v-else class="home flex p-5 h-full">
+  <main v-else class="home flex p-5 h-full" :style="setBg">
     <section class="mission-patch w-1/3 z-0">
-      <img
-        :src="launch.links.patch.large"
-        :alt="launch.name"
-        class="h-full absolute animate-spin-slow"
-      />
+      <img :src="launch.links.patch.large" :alt="launch.name" class="h-full absolute animate-spin-slow" />
     </section>
     <section
       class="mission-launchs w-2/3 border-solid border-l-8 border-yellow-400 p-3 flex flex-col z-10"
+      :style="setBg"
     >
       <div class="mission-title text-left mt-20 mb-5">
         <h1 class="font-display text-6xl font-black tracking-wider">
@@ -83,8 +104,6 @@ main,
 .mission-launchs {
   background-size: cover;
   background-attachment: fixed;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.95)),
-    url('https://farm4.staticflickr.com/3955/32915197674_eee74d81bb_b.jpg');
 }
 
 .animate-spin-slow {
