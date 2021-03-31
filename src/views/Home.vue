@@ -3,12 +3,17 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 
+import Map from '../components/Map.vue';
+
 const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
 
 export default {
   name: 'Home',
+  components: {
+    Map,
+  },
   data() {
     return {
       loading: true,
@@ -51,7 +56,6 @@ export default {
         .get(`https://api.spacexdata.com/v4/rockets/${self.launch.rocket}`)
         .then(res => {
           self.rocket = res.data.flickr_images[Math.floor(Math.random() * res.data.flickr_images.length)];
-          console.log(res.data.flickr_images[Math.floor(Math.random() * res.data.flickr_images.length)]);
         })
         .catch(err => {
           console.log(err);
@@ -68,16 +72,18 @@ export default {
   <div class="bg-black h-full flex flex-col items-center justify-center" v-if="loading">
     <span class="animate-pulse">Loading...</span>
   </div>
-  <main v-else class="home flex p-5 h-full" :style="setBg">
-    <section class="mission-patch w-1/3 z-0">
-      <img :src="launch.links.patch.large" :alt="launch.name" class="h-full absolute animate-spin-slow" />
+  <main v-else class="home flex h-full relative" :style="setBg">
+    <Map class="absolute z-20" />
+    <section id="mission-patch" class="w-full z-0 relative overflow-hidden">
+      <img :src="launch.links.patch.large" :alt="launch.name" class="absolute max-h-full animate-spin-slow" />
     </section>
     <section
-      class="mission-launchs w-2/3 border-solid border-l-8 border-yellow-400 p-3 flex flex-col z-10"
+      id="mission-launchs"
+      class="w-2/3 left-1/3 border-solid border-l-8 border-yellow-400 p-3 flex flex-col z-10 absolute h-full"
       :style="setBg"
     >
-      <div class="mission-title text-left mt-20 mb-5">
-        <h1 class="font-display text-6xl font-black tracking-wider">
+      <div id="mission-title" class="text-left mt-20 mb-5">
+        <h1 class="font-display text-6xl font-black tracking-wider text-yellow-400 z-30">
           {{ launch.name }}
         </h1>
       </div>
@@ -89,11 +95,13 @@ export default {
           {{ launch.details }}
         </p>
       </div>
-      <div class="mission-dates flex-grow flex flex-col justify-center">
-        <div class="text-left text-4xl">
+      <div id="mission-dates" class="flex-grow flex flex-col justify-center">
+        <div class="text-left text-4xl pl-8">
           {{ formattedDate }}
         </div>
-        <div class="text-left text-6xl">{{ countdown }}</div>
+        <h2 class="text-left text-9xl absolute pt-16 opacity-25 font-display tracking-wide font-black">
+          {{ countdown }}
+        </h2>
       </div>
     </section>
   </main>
@@ -101,7 +109,7 @@ export default {
 
 <style>
 main,
-.mission-launchs {
+#mission-launchs {
   background-size: cover;
   background-attachment: fixed;
 }
