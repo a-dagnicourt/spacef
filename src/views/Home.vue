@@ -25,7 +25,7 @@ export default {
   computed: {
     setBg() {
       return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.95)), url(${this.rocket})`,
+        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 75%), url(${this.rocket})`,
       };
     },
   },
@@ -73,29 +73,29 @@ export default {
     <span class="animate-pulse">Loading...</span>
   </div>
   <main v-else class="home flex h-full relative" :style="setBg">
-    <Map class="absolute z-20" />
     <section id="mission-patch" class="w-full z-0 relative overflow-hidden">
       <img :src="launch.links.patch.large" :alt="launch.name" class="absolute max-h-full animate-spin-slow" />
     </section>
     <section
       id="mission-launchs"
-      class="w-2/3 left-1/3 border-solid border-l-8 border-yellow-400 p-3 flex flex-col z-10 absolute h-full"
+      class="w-2/3 left-1/3 border-solid border-l-8 border-yellow-400 flex flex-col z-10 absolute h-full"
       :style="setBg"
     >
-      <div id="mission-title" class="text-left mt-20 mb-5">
-        <h1 class="font-display text-6xl font-black tracking-wider text-yellow-400 z-30">
-          {{ launch.name }}
+      <Map class="absolute z-20" />
+      <div id="mission-title" class="text-left mt-20 mb-5 ml-3">
+        <h1 class="font-display text-6xl font-black tracking-wider text-yellow-400 z-top">
+          <i class="fas fa-rocket"></i>{{ launch.name }}
         </h1>
       </div>
-      <div class="launchpad text-left mb-5">
+      <div class="launchpad text-left mb-5 ml-3">
         {{ launchpad }}
       </div>
-      <div class="mission-desc text-left text-xl italic leading-5 my-5">
+      <div class="mission-desc text-left text-xl italic leading-5 my-5 ml-3">
         <p class="text-left w-2/3">
           {{ launch.details }}
         </p>
       </div>
-      <div id="mission-dates" class="flex-grow flex flex-col justify-center">
+      <div id="mission-dates" class="flex-grow flex flex-col justify-center ml-3">
         <div class="text-left text-4xl pl-8">
           {{ formattedDate }}
         </div>

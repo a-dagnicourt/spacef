@@ -1,9 +1,9 @@
 <template>
   <l-map
-    style="height:100vh; width:100vw; mix-blend-mode:screen"
+    style="height:100vh; width:66.26vw; mix-blend-mode:lighten"
     v-model="zoom"
     v-model:zoom="zoom"
-    :center="[28.5618571 + 10, -80.577366 - 40]"
+    :center="[28.5618571, -80.577366 - 20]"
     :options="{ zoomControl: false, scrollWheelZoom: false }"
   >
     <l-tile-layer
