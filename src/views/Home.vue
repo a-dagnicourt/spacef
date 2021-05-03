@@ -69,12 +69,12 @@ export default {
 
 <template>
   <div class="wrapper bg" :style="setBg">
-    <div class="content bg h-full w-full absolute z-30" :style="setBg">
+    <div class="content bg h-full w-full absolute z-30 overflow-hidden" :style="setBg">
       <div class="bg-black h-full flex flex-col items-center justify-center" v-if="loading">
         <span class="animate-pulse">Loading...</span>
       </div>
       <main v-else class="home flex h-full z-30">
-        <section id="mission-patch" class="w-full z-0 overflow-hidden">
+        <section id="mission-patch" class="z-0">
           <img :src="launch.links.patch.large" :alt="launch.name" class="absolute max-h-full animate-spin-slow" />
         </section>
         <Map class="z-20 absolute" />
