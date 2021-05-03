@@ -6,10 +6,7 @@
     :center="[28.5618571, -80.577366 - 40]"
     :options="{ zoomControl: false, scrollWheelZoom: false }"
   >
-    <l-tile-layer
-      :attribution="attribution"
-      url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-    />
+    <l-tile-layer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png" />
     <l-circle-marker :lat-lng="circle.center" :radius="circle.radius" :color="circle.color" />
   </l-map>
 </template>
@@ -28,12 +25,10 @@ export default {
   data() {
     return {
       zoom: 4,
-      attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
       circle: {
         center: [28.5618571, -80.577366],
         radius: 10,
         color: 'rgba(251, 191, 36, 0.65)',
-        interactive: true,
       },
     };
   },
