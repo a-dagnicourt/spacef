@@ -1,6 +1,7 @@
 spacef / a fucking SpaceX launches infos app
 ======
 
+
 ## Project goal
 
 * Get your lazy ass informed on SpaceX launches
@@ -31,3 +32,6 @@ One day, maybe :
 * A lots more.
 * Or not.
 * We'll see.
+
+
+*Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.*
