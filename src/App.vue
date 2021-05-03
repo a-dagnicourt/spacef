@@ -4,6 +4,7 @@
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 
 #app {
   font-family: Poppins, Helvetica, Arial, sans-serif;
